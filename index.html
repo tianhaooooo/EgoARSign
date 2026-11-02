@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="EgoARSign enables American Sign Language translation from the native hand tracking of commodity AR glasses by repurposing existing third-person ASL video datasets.">
+  <meta name="keywords" content="EgoARSign, ASL translation, sign language, AR glasses, hand tracking, Aria Gen 2, Magic Leap 2">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EgoARSign: ASL Translation on Commodity AR Glasses</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script defer src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><span class="dnerf">EgoARSign</span></h1>
+          <h2 class="title is-3 publication-subtitle">Enabling ASL Translation via Native Sensing on Commodity AR Glasses</h2>
+
+          <!-- TODO: replace with the real author list after the review period. -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Anonymous Author(s)</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block publication-venue">Under Review</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. TODO: set href and remove "is-disabled-link" once the paper is public. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark is-disabled-link" title="Coming soon">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark is-disabled-link" title="Coming soon">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="#demo" class="button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-video"></i></span>
+                  <span>Demo</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark is-disabled-link" title="Coming soon">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+            <p class="links-note">Paper, arXiv, and code links coming soon.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser: live prototype demo. -->
+<section class="hero teaser" id="demo">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-5 has-text-centered">
+          <div class="demo-frame">
+            <video id="teaser" poster="./static/images/demo_poster.jpg"
+                   autoplay muted loop playsinline controls preload="metadata">
+              <source src="./static/videos/demo.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="column is-6">
+          <span class="update-tag">
+            <i class="fas fa-person-digging"></i>
+            Prototype demo &middot; this video will be updated
+          </span>
+          <h2 class="subtitle teaser-subtitle">
+            <span class="dnerf">EgoARSign</span> translates ASL signing into English from the
+            <b>native hand tracking</b> of commodity AR glasses, with no external camera and no extra sensors.
+          </h2>
+          <ul class="demo-steps">
+            <li>
+              <span class="step-icon"><i class="fas fa-glasses"></i></span>
+              <span>The signer wears <b>Project Aria Gen 2</b>.</span>
+            </li>
+            <li>
+              <span class="step-icon"><i class="fas fa-wifi"></i></span>
+              <span>On-device 3D hand tracking streams over Wi-Fi to a nearby laptop.</span>
+            </li>
+            <li>
+              <span class="step-icon"><i class="fas fa-laptop"></i></span>
+              <span>The laptop segments each sentence and translates it with a hand-only model.</span>
+            </li>
+            <li>
+              <span class="step-icon"><i class="fas fa-volume-high"></i></span>
+              <span>The English translation is shown as text and spoken aloud.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            AR glasses offer a promising platform for portable American Sign Language (ASL) translation.
+            However, existing wearable systems often rely on customized sensing hardware and purpose-collected
+            datasets, limiting reproducibility and broader adoption. While commodity AR glasses provide native
+            hand tracking without additional sensing hardware, they capture only partial, head-relative hand
+            observations, missing the facial expressions and head and upper-body movements that convey important
+            linguistic information. Meanwhile, most existing ASL translation systems and datasets rely on
+            third-person-view (TPV) videos with richer visual information, whereas labeled first-person-view (FPV)
+            hand-tracking data remain scarce.
+          </p>
+          <p>
+            We present <span class="dnerf">EgoARSign</span>, a framework that enables ASL translation from native
+            AR hand tracking by leveraging existing captioned TPV videos. <span class="dnerf">EgoARSign</span>
+            reconstructs 3D signing motion and synthesizes FPV hand-tracking sequences while simulating head
+            movement and tracking loss. To mitigate the loss of linguistic information beyond hand movements, we
+            train a hand encoder with whole-body motion supervision and use its features and paired captions to
+            train an FPV translator.
+          </p>
+          <p>
+            On synthetic FPV test sets derived from OpenASL and How2Sign, <span class="dnerf">EgoARSign</span>
+            achieves BLEU-4 scores of 19.37 and 10.19, respectively, only 16.0% and 30.4% lower than a
+            state-of-the-art TPV-based translator. We further deploy <span class="dnerf">EgoARSign</span> on Aria
+            Gen 2 and Magic Leap 2 and evaluate it with 10 participants, each signing about 15 sentences selected
+            from a 61-sentence inventory. On native Aria Gen 2
+            hand tracking, limited labeled adaptation improves cross-signer BLEU-4 from 10.0 to 40.7. We also build
+            a live sign-to-speech prototype that streams hand tracking from Aria Gen 2 to a nearby laptop and speaks
+            the translation in English. By bridging existing TPV datasets and native AR sensing,
+            <span class="dnerf">EgoARSign</span> reduces reliance on specialized hardware and large labeled FPV
+            datasets, advancing practical ASL translation on AR glasses.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Overview. -->
+    <div class="columns is-centered has-text-centered mt-6">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Overview</h2>
+        <img src="./static/images/fig1_overview.png" class="paper-figure"
+             alt="Overview of EgoARSign: a signer wearing commodity AR glasses with native 3D hand tracking; TPV ASL videos and captions supervise a shared hand-to-text translator that outputs English.">
+        <div class="content has-text-justified">
+          <p>
+            <b>Key insight.</b> Existing TPV videos contain both the hand movements needed to
+            <i>synthesize</i> FPV hand-tracking observations and the richer facial and body information that can
+            <i>supervise</i> a hand-only translator. <span class="dnerf">EgoARSign</span> uses these two forms of
+            information to train an FPV translator from existing captioned TPV corpora, without large-scale
+            labeled FPV data or specialized sensing hardware.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Overview. -->
+  </div>
+</section>
+
+<!-- TPV vs. FPV observations. -->
+<section class="section section-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Third-Person vs. First-Person Observations</h2>
+        <div class="columns is-centered view-pair">
+          <div class="column">
+            <img src="./static/images/tpv_view.jpg" class="view-image"
+                 alt="Third-person camera view of a person signing, with the face pixelated.">
+            <p class="figure-label">(a) TPV camera: hands, face, and upper body are visible.</p>
+          </div>
+          <div class="column">
+            <img src="./static/images/fpv_view.jpg" class="view-image"
+                 alt="First-person view from AR glasses with tracked hand landmarks overlaid in blue and orange.">
+            <p class="figure-label">(b) FPV on AR glasses: only partial, head-relative hand landmarks.</p>
+          </div>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            ASL conveys meaning through hand movements, facial expressions, head movements, and upper-body posture.
+            Native AR hand tracking observes only the hands, relative to the moving head, and tracking can degrade
+            when hands overlap, move quickly, or leave the sensing field. Large captioned ASL corpora exist only as
+            TPV video, and AR devices differ in their joint definitions, coordinate frames, and validity signals.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Method. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Method</h2>
+
+        <h3 class="title is-4"><span class="step-number">1</span>TPV-to-FPV Supervision Synthesis</h3>
+        <div class="content has-text-justified">
+          <p>
+            We reconstruct 3D signing motion from captioned TPV videos by fusing AiOS (whole body), WiLoR (3D hands),
+            and RTMPose (2D arm keypoints) into SMPL-X, then refine the upper body so the hands connect to the arms.
+            The recovered hands are transformed into a head-centered frame, producing caption-aligned FPV hand-landmark
+            sequences. The result is a scalable source of hand-only training data and a controlled synthetic FPV testbed.
+          </p>
+        </div>
+        <img src="./static/images/tpv_fpv.png" class="paper-figure"
+             alt="Pipeline from a TPV ASL video to synthesized FPV hand landmarks: holistic 3D signer reconstruction, upper-body refinement, head-centered canonicalization, temporal refinement, and device-anchored observation synthesis.">
+
+        <h3 class="title is-4"><span class="step-number">2</span>Partial-Observation Representation Learning</h3>
+        <div class="content has-text-justified">
+          <p>
+            A hand-only student encoder reads head-centered 3D hand landmarks under structured corruption (finger
+            masking, whole-hand dropout, temporal gaps, and coordinate noise). During training, a frozen whole-body
+            teacher trained on TPV keypoints supplies latent distillation targets, and an auxiliary decoder predicts
+            face, head, and upper-body motion. Only the hand encoder is kept for translation.
+          </p>
+        </div>
+        <img src="./static/images/reconstruction.png" class="paper-figure is-medium"
+             alt="Corruption-robust partial-hand representation learning with a frozen whole-body teacher and an auxiliary whole-body decoder.">
+
+        <h3 class="title is-4"><span class="step-number">3</span>Reconstruction-Free Translation</h3>
+        <div class="content has-text-justified">
+          <p>
+            A lightweight projector maps hand features into a Uni-Sign-initialized mT5 translator. A frozen TPV
+            translation pathway aligns the encoder states during training and is removed at inference. At test time,
+            the model maps native hand tracking straight to English, with no full-body pose reconstruction and no TPV video.
+          </p>
+        </div>
+        <img src="./static/images/overview_asl.png" class="paper-figure is-medium"
+             alt="Reconstruction-free translation: pretrained partial observation encoder, lightweight projector, and translation encoder-decoder aligned with a frozen full-body translation reference.">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Native devices. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Native Sensing on Commodity AR Glasses</h2>
+    <div class="columns is-vcentered">
+      <div class="column is-4 has-text-centered">
+        <img src="./static/images/devices.png" class="devices-image"
+             alt="Project Aria Gen 2 glasses and the Magic Leap 2 headset with its compute pack and controller.">
+      </div>
+      <div class="column is-8">
+        <div class="content has-text-justified">
+          <p>
+            A shared device-profile interface converts each device's native joints, coordinate frames, and tracking
+            validity signals into one model-facing representation. The same translator therefore serves both
+            <b>Project Aria Gen 2</b> and <b>Magic Leap 2</b>, keeping device geometry separate from linguistic modeling.
+          </p>
+          <p>
+            We collected native hand tracking from <b>10 participants</b>. Each participant signed about
+            <b>15 sentences</b> selected from a <b>61-sentence inventory</b> (54 from OpenASL, 7 from How2Sign),
+            repeating each sentence three times. All participants were recorded on Aria Gen 2, and two were also
+            recorded on Magic Leap 2, for 484 recordings in total.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Results. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Results</h2>
+
+    <div class="columns is-multiline stat-row">
+      <div class="column is-4">
+        <div class="stat-tile">
+          <p class="stat-value">19.37</p>
+          <p class="stat-label">BLEU-4 on synthetic FPV OpenASL<br><span>TPV-pose reference: 23.07</span></p>
+        </div>
+      </div>
+      <div class="column is-4">
+        <div class="stat-tile">
+          <p class="stat-value">10.19</p>
+          <p class="stat-label">BLEU-4 on synthetic FPV How2Sign<br><span>TPV-pose reference: 14.65</span></p>
+        </div>
+      </div>
+      <div class="column is-4">
+        <div class="stat-tile">
+          <p class="stat-value">10.0 &rarr; 40.7</p>
+          <p class="stat-label">BLEU-4 on held-out Aria signers<br><span>zero-label &rarr; limited adaptation</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <h3 class="title is-5">Synthetic FPV translation (BLEU-4)</h3>
+        <div class="table-container">
+          <table class="table is-fullwidth is-narrow results-table">
+            <thead>
+              <tr><th>Dataset</th><th>TPV pose</th><th>Hand-only (ours)</th><th>Device-oriented</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>OpenASL (903 clips)</td><td>23.07</td><td><b>19.37</b></td><td>17.58</td></tr>
+              <tr><td>How2Sign (2,203 clips)</td><td>14.65</td><td><b>10.19</b></td><td>&ndash;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="column is-6">
+        <h3 class="title is-5">Native-device, leave-one-signer-out (BLEU-4)</h3>
+        <div class="table-container">
+          <table class="table is-fullwidth is-narrow results-table">
+            <thead>
+              <tr><th>Native input</th><th>Zero-label</th><th>mT5 frozen</th><th>mT5 adapted</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Aria Gen 2, 10 signers</td><td>10.0</td><td>21.8</td><td><b>40.7</b></td></tr>
+              <tr><td>Magic Leap 2, 2 signers</td><td>13.3</td><td>22.9</td><td><b>58.6</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="title is-5">Labeled-data budget on Aria Gen 2 (BLEU-4, fraction of other signers' recordings)</h3>
+    <div class="table-container">
+      <table class="table is-fullwidth is-narrow results-table">
+        <thead>
+          <tr><th>Budget</th><th>0%</th><th>5%</th><th>10%</th><th>20%</th><th>50%</th><th>100%</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>mT5 frozen</td><td>10.0</td><td>15.6</td><td>17.2</td><td>20.3</td><td>21.2</td><td>21.8</td></tr>
+          <tr><td>Full adaptation</td><td>10.0</td><td>18.2</td><td>22.5</td><td>30.4</td><td>37.8</td><td><b>40.7</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="figure-caption">
+      Even 20% of the other signers' labeled recordings triples zero-label performance. Held-out-phrase experiments
+      show that gains on previously observed sentences do not necessarily carry over to new sentences; see the paper
+      for the full protocols. Numbers reflect the current version of the paper and may be updated.
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p>
+            This website is licensed under a <a rel="license"
+              href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0
+            International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
