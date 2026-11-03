@@ -9,8 +9,8 @@ The page is static HTML (Bulma + Font Awesome from CDNs) and needs no build step
 ```
 index.html              page content
 static/css/index.css    styles (adapted from the Nerfies template)
-static/js/index.js      disabled-link handling
-static/images/          figures rendered from the paper PDFs
+static/js/index.js      disabled-link handling, demo video loading
+static/images/          demo poster and favicon
 static/videos/demo.mp4  prototype demo video (H.264, 720p)
 ```
 
@@ -45,6 +45,7 @@ Then enable **Settings → Pages → Deploy from a branch → main / (root)**.
   Remove the "this video will be updated" tag in `index.html` once the final video is in.
 - **Paper / arXiv / Code buttons:** add an `href` and remove the `is-disabled-link` class.
 - **Authors:** see the `TODO` comment in `index.html`.
+- **Content scope:** the page shows only the demo video and the abstract; technical details stay in the paper.
 - **BibTeX:** add a citation section after the paper is accepted.
 
 ## Credits
