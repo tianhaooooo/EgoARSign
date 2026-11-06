@@ -127,34 +127,32 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            AR glasses offer a promising platform for portable American Sign Language (ASL) translation.
-            However, existing wearable systems often rely on customized sensing hardware and purpose-collected
-            datasets, limiting reproducibility and broader adoption. While commodity AR glasses provide native
-            hand tracking without additional sensing hardware, they capture only partial, head-relative hand
-            observations, missing the facial expressions and head and upper-body movements that convey important
-            linguistic information. Meanwhile, most existing ASL translation systems and datasets rely on
-            third-person-view (TPV) videos with richer visual information, whereas labeled first-person-view (FPV)
-            hand-tracking data remain scarce.
+            AR glasses offer a promising platform for portable American Sign Language (ASL) translation, but existing
+            wearable systems often rely on customized hardware and purpose-collected datasets. While commodity AR glasses
+            provide native hand tracking, they capture only partial, head-relative hand movements, missing facial and
+            upper-body cues important to ASL. Moreover, large-scale ASL datasets primarily contain third-person-view (TPV)
+            videos, whereas labeled first-person-view (FPV) hand-tracking data remain scarce.
           </p>
           <p>
-            We present <span class="dnerf">EgoARSign</span>, a framework that enables ASL translation from native
-            AR hand tracking by leveraging existing captioned TPV videos. <span class="dnerf">EgoARSign</span>
-            reconstructs 3D signing motion and synthesizes FPV hand-tracking sequences while simulating head
-            movement and tracking loss. To mitigate the loss of linguistic information beyond hand movements, we
-            train a hand encoder with whole-body motion supervision and use its features and paired captions to
-            train an FPV translator.
+            To address these challenges, we present <span class="dnerf">EgoARSign</span>, a framework that enables ASL
+            translation on commodity AR glasses by leveraging existing captioned TPV videos.
+            <span class="dnerf">EgoARSign</span> reconstructs 3D signing motion from TPV videos and synthesizes FPV
+            hand-tracking sequences while simulating head movements and tracking loss. To handle incomplete observations,
+            we train a corruption-robust hand encoder with whole-body supervision and integrate its features with a
+            TPV-pretrained translator, without reconstructing missing body motion at inference. A shared device interface
+            supports heterogeneous native hand-tracking outputs and optional label-efficient adaptation.
           </p>
           <p>
-            On synthetic FPV test sets derived from OpenASL and How2Sign, <span class="dnerf">EgoARSign</span>
-            achieves BLEU-4 scores of 19.37 and 10.19, respectively, only 16.0% and 30.4% lower than a
-            state-of-the-art TPV-based translator. We further deploy <span class="dnerf">EgoARSign</span> on Aria
-            Gen 2 and Magic Leap 2 and evaluate it with 10 participants, each signing about 15 sentences selected
-            from a 61-sentence inventory. On native Aria Gen 2
-            hand tracking, limited labeled adaptation improves cross-signer BLEU-4 from 10.0 to 40.7. We also build
-            a live sign-to-speech prototype that streams hand tracking from Aria Gen 2 to a nearby laptop and speaks
-            the translation in English. By bridging existing TPV datasets and native AR sensing,
-            <span class="dnerf">EgoARSign</span> reduces reliance on specialized hardware and large labeled FPV
-            datasets, advancing practical ASL translation on AR glasses.
+            We evaluate <span class="dnerf">EgoARSign</span> on FPV test sets transformed from OpenASL and How2Sign, as
+            well as native hand-tracking recordings from 14 participants, including four fluent ASL signers, using
+            Meta&rsquo;s Aria Gen 2 and Magic Leap 2. On the view-transformed test sets, <span class="dnerf">EgoARSign</span>
+            demonstrates promising translation performance despite relying on substantially less visual information than
+            state-of-the-art TPV-based approaches. On real-device recordings, the generic model achieves a BLEU-4 score of
+            26.4 on fluent signers without labeled device adaptation, which improves to 61.9 through adaptation using only
+            novice-participant recordings. Furthermore, label-efficient adaptation achieves 40.7 BLEU-4 on held-out novice
+            signers, demonstrating generalization to unseen users. These results highlight the feasibility of ASL
+            translation through native sensing on commodity AR glasses without custom sensing hardware or extensive
+            labeled FPV training datasets.
           </p>
         </div>
       </div>
