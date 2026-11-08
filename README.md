@@ -42,7 +42,7 @@ Then enable **Settings → Pages → Deploy from a branch → main / (root)**.
 - **Demo video:** replace `static/videos/demo.mp4` and `static/images/demo_poster.jpg`.
   The signer's head must be pixelated (glasses left visible) and the file encoded as 720p H.264 MP4;
   do not commit an unblurred recording, since it stays in the git history.
-  Remove the "this video will be updated" tag in `index.html` once the final video is in.
+  If the new video has a different shape, update `aspect-ratio` in `.demo-frame video`.
 - **Paper / arXiv / Code buttons:** add an `href` and remove the `is-disabled-link` class.
 - **Authors:** see the `TODO` comment in `index.html`.
 - **Content scope:** the page shows only the demo video and the abstract; technical details stay in the paper.

@@ -90,21 +90,6 @@ body {
   object-fit: cover;
 }
 
-.update-tag {
-  display: inline-block;
-  background: #fff6e0;
-  color: #8a5a00;
-  border: 1px solid #f2d28b;
-  border-radius: 999px;
-  padding: 0.3rem 0.9rem;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-.update-tag i {
-  margin-right: 0.35rem;
-}
-
 .teaser-subtitle {
   line-height: 1.45;
   color: #363636;
